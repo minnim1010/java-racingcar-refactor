@@ -3,7 +3,6 @@ package racingcar.game.vo;
 import java.util.Arrays;
 import java.util.List;
 import racingcar.common.config.RacingCarRule;
-import racingcar.domain.racer.RacingCar;
 import racingcar.validator.Validator;
 
 public record RacingCarNamesInputVo(String input) {
@@ -13,9 +12,7 @@ public record RacingCarNamesInputVo(String input) {
         Validator.validateHasText(input);
     }
 
-    public List<RacingCar> toRacingCarList() {
-        return Arrays.stream(input.split(RacingCarRule.DELIMITER))
-                .map(RacingCar::from)
-                .toList();
+    public List<String> toList() {
+        return Arrays.asList(input.split(RacingCarRule.DELIMITER));
     }
 }

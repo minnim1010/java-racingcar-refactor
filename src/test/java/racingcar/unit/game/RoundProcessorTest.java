@@ -2,27 +2,29 @@ package racingcar.unit.game;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.assertj.core.groups.Tuple;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import racingcar.config.RacerMovingNumber;
 import racingcar.domain.RacerRegistry;
-import racingcar.domain.racer.RacingCar;
+import racingcar.domain.race.strategy.MovementStrategy;
+import racingcar.domain.race.strategy.RandomNumberBasedMovementStrategy;
+import racingcar.factory.RacingCarFactory;
 import racingcar.game.RacingRoundProcessor;
 import racingcar.game.vo.RacerPositionVo;
 import racingcar.mock.MockRandom;
 
 class RoundProcessorTest extends RacerMovingNumber {
 
-    private static RacerRegistry<RacingCar> getRacingCarRegistry(String... names) {
-        List<RacingCar> racingCarList = new ArrayList<>();
-        for (String name : names) {
-            racingCarList.add(RacingCar.from(name));
-        }
-        RacerRegistry<RacingCar> racerRegistry = new RacerRegistry<>();
-        racerRegistry.addAll(racingCarList);
+    private final MockRandom mockRandom = new MockRandom();
+    private final MovementStrategy movementStrategy = new RandomNumberBasedMovementStrategy(mockRandom);
+    private final RacingCarFactory racingCarFactory = new RacingCarFactory(movementStrategy);
+
+    private RacerRegistry getRacingCarRegistry(String... names) {
+        RacerRegistry racerRegistry = new RacerRegistry();
+        racerRegistry.addAll(Arrays.asList(names));
         return racerRegistry;
     }
 
@@ -30,8 +32,7 @@ class RoundProcessorTest extends RacerMovingNumber {
     @Test
     void progressTurn() {
         //given
-        MockRandom mockRandom = new MockRandom();
-        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
+        RacingRoundProcessor racingRoundProcessor = new RacingRoundProcessor(racingCarFactory,
                 getRacingCarRegistry("a", "b", "c"));
         mockRandom.setRandomNumber(
                 MOVING_FORWARD, STOP, MOVING_FORWARD,
@@ -51,8 +52,7 @@ class RoundProcessorTest extends RacerMovingNumber {
     @Test
     void getTurnResult() {
         //given
-        MockRandom mockRandom = new MockRandom();
-        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
+        RacingRoundProcessor racingRoundProcessor = new RacingRoundProcessor(racingCarFactory,
                 getRacingCarRegistry("a", "b", "c"));
         //when
         List<RacerPositionVo> turnResult = racingRoundProcessor.getRacerPositions();
@@ -70,8 +70,7 @@ class RoundProcessorTest extends RacerMovingNumber {
     @Test
     void getWinners() {
         //given
-        MockRandom mockRandom = new MockRandom();
-        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
+        RacingRoundProcessor racingRoundProcessor = new RacingRoundProcessor(racingCarFactory,
                 getRacingCarRegistry("a", "b", "c"));
         mockRandom.setRandomNumber(MOVING_FORWARD, STOP, MOVING_FORWARD);
         //when

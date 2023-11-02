@@ -3,7 +3,9 @@ package racingcar.game;
 import java.util.List;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.Round;
-import racingcar.domain.racer.Racer;
+import racingcar.domain.race.strategy.MovementStrategy;
+import racingcar.domain.race.strategy.RandomNumberBasedMovementStrategy;
+import racingcar.factory.RacingCarFactory;
 import racingcar.game.vo.RacingCarNamesInputVo;
 import racingcar.game.vo.TotalRoundInputVo;
 import racingcar.util.Random;
@@ -12,7 +14,7 @@ public class RacingGameManager {
 
     private final Random random;
     private final RacingGameScreen racingGameScreen;
-    private final RacerRegistry<Racer> racerRegistry = new RacerRegistry<>();
+    private final RacerRegistry racerRegistry = new RacerRegistry();
 
     public RacingGameManager(Random random, RacingGameScreen racingGameScreen) {
         this.random = random;
@@ -34,7 +36,7 @@ public class RacingGameManager {
 
     private void registerRacingCar() {
         RacingCarNamesInputVo racingCarNamesInputVo = racingGameScreen.inputRacingCarNames();
-        racerRegistry.addAll(racingCarNamesInputVo.toRacingCarList());
+        racerRegistry.addAll(racingCarNamesInputVo.toList());
     }
 
     private Round getTotalTurn() {
@@ -44,8 +46,9 @@ public class RacingGameManager {
 
     private List<String> race(Round totalRound) {
         racingGameScreen.startShowGameResult();
-
-        RacingRoundProcessor<Racer> racingRoundProcessor = new RacingRoundProcessor<>(random, racerRegistry);
+        MovementStrategy movementStrategy = new RandomNumberBasedMovementStrategy(random);
+        RacingCarFactory racingCarFactory = new RacingCarFactory(movementStrategy);
+        RacingRoundProcessor racingRoundProcessor = new RacingRoundProcessor(racingCarFactory, racerRegistry);
         for (int i = 0; i < totalRound.getCount(); i++) {
             racingRoundProcessor.progressRound();
             racingGameScreen.showRoundResult(racingRoundProcessor.getRacerPositions());

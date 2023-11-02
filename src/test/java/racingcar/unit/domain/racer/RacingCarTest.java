@@ -9,9 +9,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.common.config.RacingCarRule;
-import racingcar.domain.racer.RacingCar;
+import racingcar.domain.race.strategy.MovementStrategy;
+import racingcar.domain.race.strategy.RandomNumberBasedMovementStrategy;
+import racingcar.domain.racingcar.RacingCar;
+import racingcar.mock.MockRandom;
 
 class RacingCarTest {
+
+    private final MockRandom mockRandom = new MockRandom();
+    private final MovementStrategy movementStrategy = new RandomNumberBasedMovementStrategy(mockRandom);
 
     @Nested
     @DisplayName("이름을 기반으로 경주 자동차 생성 시")
@@ -23,7 +29,7 @@ class RacingCarTest {
             //given
             String name = "pobi";
             //when
-            RacingCar racingCar = RacingCar.from(name);
+            RacingCar racingCar = RacingCar.of(name, movementStrategy);
             //then
             assertThat(racingCar.getName()).isEqualTo(name);
         }
@@ -34,7 +40,7 @@ class RacingCarTest {
             //given
             String name = "1".repeat(RacingCarRule.MAX_RACER_NAME_LENGTH + 1);
             //when then
-            assertThatThrownBy(() -> RacingCar.from(name))
+            assertThatThrownBy(() -> RacingCar.of(name, movementStrategy))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -44,7 +50,7 @@ class RacingCarTest {
         void fail_InvalidNameFormat(String name) {
             //given
             //when then
-            assertThatThrownBy(() -> RacingCar.from(name))
+            assertThatThrownBy(() -> RacingCar.of(name, movementStrategy))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }
@@ -58,9 +64,10 @@ class RacingCarTest {
         @ParameterizedTest
         void stop(int number) {
             //given
-            RacingCar racingCar = RacingCar.from("stop");
+            RacingCar racingCar = RacingCar.of("stop", movementStrategy);
+            mockRandom.setRandomNumber(number);
             //when
-            racingCar.move(number);
+            racingCar.move();
             //then
             assertThat(racingCar.getPosition()).isZero();
         }
@@ -70,9 +77,10 @@ class RacingCarTest {
         @ParameterizedTest
         void forward(int number) {
             //given
-            RacingCar racingCar = RacingCar.from("go");
+            RacingCar racingCar = RacingCar.of("go", movementStrategy);
+            mockRandom.setRandomNumber(number);
             //when
-            racingCar.move(number);
+            racingCar.move();
             //then
             assertThat(racingCar.getPosition()).isEqualTo(1);
         }

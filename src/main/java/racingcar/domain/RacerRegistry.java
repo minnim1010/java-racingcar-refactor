@@ -2,21 +2,20 @@ package racingcar.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import racingcar.domain.racer.Racer;
 import racingcar.validator.RacerValidator;
 
-public class RacerRegistry<T extends Racer> {
+public class RacerRegistry {
 
-    private final List<T> racers = new ArrayList<>();
+    private final List<String> racingCarNames = new ArrayList<>();
 
-    public void addAll(List<? extends T> racers) {
-        RacerValidator.validateRacerSize(racers);
-        RacerValidator.validateDuplicatedRacerName(racers);
+    public void addAll(List<String> racingCarNames) {
+        RacerValidator.validateRacerSize(racingCarNames);
+        RacerValidator.validateDuplicatedRacerName(racingCarNames);
 
-        this.racers.addAll(racers);
+        this.racingCarNames.addAll(racingCarNames);
     }
 
-    public List<T> getRacers() {
-        return racers;
+    public List<String> getRacingCarNames() {
+        return racingCarNames;
     }
 }

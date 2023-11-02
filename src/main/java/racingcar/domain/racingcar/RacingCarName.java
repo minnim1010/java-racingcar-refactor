@@ -1,13 +1,12 @@
-package racingcar.domain.racer;
+package racingcar.domain.racingcar;
 
 import java.util.Objects;
 import racingcar.validator.RacerValidator;
 
-public abstract class Racer implements Raceable {
-    protected final String name;
-    protected int position;
+public class RacingCarName {
+    private final String name;
 
-    protected Racer(String name) {
+    public RacingCarName(String name) {
         RacerValidator.validateRacerNameLength(name);
         RacerValidator.validateRacerNameFormat(name);
 
@@ -16,10 +15,6 @@ public abstract class Racer implements Raceable {
 
     public String getName() {
         return name;
-    }
-
-    public int getPosition() {
-        return position;
     }
 
     @Override
@@ -31,9 +26,9 @@ public abstract class Racer implements Raceable {
             return false;
         }
 
-        Racer racer = (Racer) o;
+        RacingCarName that = (RacingCarName) o;
 
-        return Objects.equals(name, racer.name);
+        return Objects.equals(name, that.name);
     }
 
     @Override
@@ -43,9 +38,6 @@ public abstract class Racer implements Raceable {
 
     @Override
     public String toString() {
-        return "Racer{" +
-                "name='" + name + '\'' +
-                ", position=" + position +
-                '}';
+        return name;
     }
 }

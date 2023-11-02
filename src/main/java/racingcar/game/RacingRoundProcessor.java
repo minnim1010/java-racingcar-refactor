@@ -1,44 +1,41 @@
 package racingcar.game;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import racingcar.common.config.RacingCarRule;
+import java.util.stream.Collectors;
 import racingcar.domain.RacerRegistry;
-import racingcar.domain.racer.Racer;
+import racingcar.domain.racingcar.RacingCar;
+import racingcar.factory.RacingCarFactory;
 import racingcar.game.vo.RacerPositionVo;
-import racingcar.util.Random;
 
-public class RacingRoundProcessor<T extends Racer> {
-    private final Random random;
-    private final List<T> racers = new ArrayList<>();
+public class RacingRoundProcessor {
+    private final List<RacingCar> racingCars;
 
-    public RacingRoundProcessor(Random random, RacerRegistry<T> racerRegistry) {
-        this.random = random;
-        this.racers.addAll(racerRegistry.getRacers());
+    public RacingRoundProcessor(RacingCarFactory racingCarFactory, RacerRegistry racerRegistry) {
+        racingCars = racerRegistry.getRacingCarNames().stream()
+                .map(racingCarFactory::createRacingCar)
+                .collect(Collectors.toList());
     }
 
     public void progressRound() {
-        for (T racer : racers) {
-            racer.move(random.getRandomNumberInRange(RacingCarRule.RANDOM_NUMBER_MIN, RacingCarRule.RANDOM_NUMBER_MAX));
-        }
+        racingCars.forEach(RacingCar::move);
     }
 
     public List<RacerPositionVo> getRacerPositions() {
-        return racers.stream()
-                .map(racingCar -> new RacerPositionVo(racingCar.getName(), racingCar.getPosition()))
+        return racingCars.stream()
+                .map(car -> new RacerPositionVo(car.getName(), car.getPosition()))
                 .toList();
     }
 
     public List<String> getWinners() {
-        Optional<Integer> maxPosition = racers.stream()
-                .map(Racer::getPosition)
+        Optional<Integer> maxPosition = racingCars.stream()
+                .map(RacingCar::getPosition)
                 .max(Integer::compareTo);
 
-        return maxPosition.map(max -> racers.stream()
+        return maxPosition.map(max -> racingCars.stream()
                         .filter(racer -> racer.getPosition() == max)
-                        .map(Racer::getName)
+                        .map(RacingCar::getName)
                         .toList())
                 .orElse(Collections.emptyList());
     }
@@ -46,7 +43,7 @@ public class RacingRoundProcessor<T extends Racer> {
     @Override
     public String toString() {
         return "RacingRoundProcessor{" +
-                "racers=" + racers +
+                "racingCars=" + racingCars +
                 '}';
     }
 }
