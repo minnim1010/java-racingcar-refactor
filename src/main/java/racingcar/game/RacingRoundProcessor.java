@@ -3,7 +3,6 @@ package racingcar.game;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.racingcar.RacingCar;
 import racingcar.factory.RacingCarFactory;
@@ -15,7 +14,7 @@ public class RacingRoundProcessor {
     public RacingRoundProcessor(RacingCarFactory racingCarFactory, RacerRegistry racerRegistry) {
         racingCars = racerRegistry.getRacingCarNames().stream()
                 .map(racingCarFactory::createRacingCar)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public void progressRound() {
