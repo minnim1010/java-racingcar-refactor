@@ -10,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.common.config.RacingCarRule;
-import racingcar.game.vo.TotalTurnInput;
+import racingcar.game.vo.TotalRoundInput;
 
-class TotalTurnInputTest {
+class TotalRoundInputTest {
 
     @Nested
     @DisplayName("입력된 시도 횟수에 대한 유효성 검사 시")
@@ -22,20 +22,20 @@ class TotalTurnInputTest {
         @Test
         void success() {
             //given
-            String input = String.valueOf(RacingCarRule.MAX_TOTAL_TURN);
+            String input = String.valueOf(RacingCarRule.MAX_TOTAL_ROUND);
             //when
-            TotalTurnInput totalTurnInput = new TotalTurnInput(input);
+            TotalRoundInput totalRoundInput = new TotalRoundInput(input);
             //then
-            assertThat(totalTurnInput.input()).isEqualTo(input);
+            assertThat(totalRoundInput.input()).isEqualTo(input);
         }
 
         @DisplayName("시도 횟수 입력의 최대 길이를 넘은 경우 예외를 발생시킨다.")
         @Test
         void fail_InvalidLength() {
             //given
-            String input = RacingCarRule.MAX_TOTAL_TURN + "0";
+            String input = RacingCarRule.MAX_TOTAL_ROUND + "0";
             //when then
-            assertThatThrownBy(() -> new TotalTurnInput(input))
+            assertThatThrownBy(() -> new TotalRoundInput(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -45,7 +45,7 @@ class TotalTurnInputTest {
         void fail_BlankInput(String input) {
             //given
             //when then
-            assertThatThrownBy(() -> new TotalTurnInput(input))
+            assertThatThrownBy(() -> new TotalRoundInput(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -55,7 +55,7 @@ class TotalTurnInputTest {
         void fail_InvalidFormat(String input) {
             //given
             //when then
-            assertThatThrownBy(() -> new TotalTurnInput(input))
+            assertThatThrownBy(() -> new TotalRoundInput(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

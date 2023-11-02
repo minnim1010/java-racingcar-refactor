@@ -10,17 +10,16 @@ import racingcar.domain.racer.Racer;
 import racingcar.game.vo.RacerPosition;
 import racingcar.util.Random;
 
-public class RacingTurnProcessor<T extends Racer> {
+public class RacingRoundProcessor<T extends Racer> {
     private final Random random;
     private final List<T> racers = new ArrayList<>();
 
-    public RacingTurnProcessor(Random random, RacerRegistry<T> racerRegistry) {
+    public RacingRoundProcessor(Random random, RacerRegistry<T> racerRegistry) {
         this.random = random;
         this.racers.addAll(racerRegistry.getRacers());
     }
 
-    public void progressTurn() {
-
+    public void progressRound() {
         for (T racer : racers) {
             racer.move(random.getRandomNumberInRange(RacingCarRule.RANDOM_NUMBER_MIN, RacingCarRule.RANDOM_NUMBER_MAX));
         }
@@ -46,7 +45,7 @@ public class RacingTurnProcessor<T extends Racer> {
 
     @Override
     public String toString() {
-        return "RacingTurnProcessor{" +
+        return "RacingRoundProcessor{" +
                 "racers=" + racers +
                 '}';
     }

@@ -4,13 +4,13 @@ import java.util.List;
 import racingcar.game.RacingGameScreen;
 import racingcar.game.vo.RacerPosition;
 import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalTurnInput;
+import racingcar.game.vo.TotalRoundInput;
 import racingcar.io.reader.Reader;
 import racingcar.io.writer.Writer;
 
 public class MockRacingGameScreen extends RacingGameScreen {
     private String racingCarNames;
-    private String totalTurn;
+    private String totalRound;
     private List<String> winnerNames;
 
     public MockRacingGameScreen(Reader reader, Writer writer) {
@@ -23,8 +23,8 @@ public class MockRacingGameScreen extends RacingGameScreen {
     }
 
     @Override
-    public TotalTurnInput inputTotalTurn() {
-        return new TotalTurnInput(totalTurn);
+    public TotalRoundInput inputTotalRound() {
+        return new TotalRoundInput(totalRound);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MockRacingGameScreen extends RacingGameScreen {
     }
 
     @Override
-    public void showTurnResult(List<RacerPosition> turnResult) {
+    public void showRoundResult(List<RacerPosition> turnResult) {
     }
 
     @Override
@@ -52,8 +52,8 @@ public class MockRacingGameScreen extends RacingGameScreen {
         this.racingCarNames = racingCarNames;
     }
 
-    public void setTotalTurn(String totalTurn) {
-        this.totalTurn = totalTurn;
+    public void setTotalRound(String totalRound) {
+        this.totalRound = totalRound;
     }
 
     public List<String> getWinnerNames() {

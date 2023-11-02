@@ -5,14 +5,14 @@ import java.util.stream.Collectors;
 import racingcar.common.config.RacingCarRule;
 import racingcar.game.vo.RacerPosition;
 import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalTurnInput;
+import racingcar.game.vo.TotalRoundInput;
 import racingcar.io.reader.Reader;
 import racingcar.io.writer.Writer;
 
 public class RacingGameScreen {
 
     private static final String INPUT_RACING_CAR_NAMES = "경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)";
-    private static final String INPUT_TOTAL_TURN = "시도할 횟수는 몇 회인가요?";
+    private static final String INPUT_TOTAL_ROUND = "시도할 횟수는 몇 회인가요?";
     private static final String START_SHOW_GAME_RESULT = "실행 결과";
     private static final String FINAL_WINNER = "최종 우승자 : %s";
 
@@ -36,16 +36,16 @@ public class RacingGameScreen {
         return new RacingCarNamesInput(reader.readLine().trim());
     }
 
-    public TotalTurnInput inputTotalTurn() {
-        writer.writeLine(INPUT_TOTAL_TURN);
-        return new TotalTurnInput(reader.readLine().trim());
+    public TotalRoundInput inputTotalRound() {
+        writer.writeLine(INPUT_TOTAL_ROUND);
+        return new TotalRoundInput(reader.readLine().trim());
     }
 
     public void startShowGameResult() {
         writer.writeLine(LINE_SEPARATOR + START_SHOW_GAME_RESULT);
     }
 
-    public void showTurnResult(List<RacerPosition> turnResult) {
+    public void showRoundResult(List<RacerPosition> turnResult) {
         String resultMessage = turnResult.stream()
                 .map(racerPosition -> String.format(TURN_RESULT_FORMAT, racerPosition.name(),
                         DISTANCE_MARKER.repeat(racerPosition.position())))

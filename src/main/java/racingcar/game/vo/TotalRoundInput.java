@@ -1,18 +1,18 @@
 package racingcar.game.vo;
 
 import racingcar.common.config.RacingCarRule;
-import racingcar.domain.RacingTurn;
+import racingcar.domain.Round;
 import racingcar.validator.Validator;
 
-public record TotalTurnInput(String input) {
+public record TotalRoundInput(String input) {
 
-    public TotalTurnInput {
+    public TotalRoundInput {
         Validator.validateLength(input, RacingCarRule.TOTAL_TURN_INPUT_LENGTH);
         Validator.validateHasText(input);
         Validator.validateNumeric(input);
     }
 
-    public RacingTurn toRacingTurn() {
-        return RacingTurn.from(Integer.parseInt(input));
+    public Round toRacingTurn() {
+        return Round.from(Integer.parseInt(input));
     }
 }

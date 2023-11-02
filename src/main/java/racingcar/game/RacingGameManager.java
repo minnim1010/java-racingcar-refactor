@@ -2,10 +2,10 @@ package racingcar.game;
 
 import java.util.List;
 import racingcar.domain.RacerRegistry;
-import racingcar.domain.RacingTurn;
+import racingcar.domain.Round;
 import racingcar.domain.racer.Racer;
 import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalTurnInput;
+import racingcar.game.vo.TotalRoundInput;
 import racingcar.util.Random;
 
 public class RacingGameManager {
@@ -22,8 +22,8 @@ public class RacingGameManager {
     public void run() {
         try {
             registerRacingCar();
-            RacingTurn totalTurn = getTotalTurn();
-            showFinalWinners(race(totalTurn));
+            Round totalRound = getTotalTurn();
+            showFinalWinners(race(totalRound));
         } catch (Exception e) {
             racingGameScreen.showError(e.getMessage());
             throw e;
@@ -37,21 +37,21 @@ public class RacingGameManager {
         racerRegistry.addAll(racingCarNamesInput.toRacingCarList());
     }
 
-    private RacingTurn getTotalTurn() {
-        TotalTurnInput totalTurnInput = racingGameScreen.inputTotalTurn();
-        return totalTurnInput.toRacingTurn();
+    private Round getTotalTurn() {
+        TotalRoundInput totalRoundInput = racingGameScreen.inputTotalRound();
+        return totalRoundInput.toRacingTurn();
     }
 
-    private List<String> race(RacingTurn totalTurn) {
+    private List<String> race(Round totalRound) {
         racingGameScreen.startShowGameResult();
 
-        RacingTurnProcessor<Racer> racingTurnProcessor = new RacingTurnProcessor<>(random, racerRegistry);
-        for (int i = 0; i < totalTurn.getCount(); i++) {
-            racingTurnProcessor.progressTurn();
-            racingGameScreen.showTurnResult(racingTurnProcessor.getRacerPositions());
+        RacingRoundProcessor<Racer> racingRoundProcessor = new RacingRoundProcessor<>(random, racerRegistry);
+        for (int i = 0; i < totalRound.getCount(); i++) {
+            racingRoundProcessor.progressRound();
+            racingGameScreen.showRoundResult(racingRoundProcessor.getRacerPositions());
         }
 
-        return racingTurnProcessor.getWinners();
+        return racingRoundProcessor.getWinners();
     }
 
     private void showFinalWinners(List<String> winnerNames) {

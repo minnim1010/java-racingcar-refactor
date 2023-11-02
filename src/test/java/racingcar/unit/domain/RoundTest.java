@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.common.config.RacingCarRule;
-import racingcar.domain.RacingTurn;
+import racingcar.domain.Round;
 
-class RacingTurnTest {
+class RoundTest {
 
     @Nested
     @DisplayName("시도 횟수의 유효성 검사 시")
@@ -21,23 +21,23 @@ class RacingTurnTest {
         @Test
         void success() {
             //given
-            int totalTurn = RacingCarRule.MAX_TOTAL_TURN;
+            int totalTurn = RacingCarRule.MAX_TOTAL_ROUND;
 
             //when
-            RacingTurn racingTurn = RacingTurn.from(totalTurn);
+            Round round = Round.from(totalTurn);
 
             //then
-            assertThat(racingTurn.getCount()).isEqualTo(totalTurn);
+            assertThat(round.getCount()).isEqualTo(totalTurn);
         }
 
-        @DisplayName("시도 횟수가 " + RacingCarRule.MIN_TOTAL_TURN + "보다 작거나 " + RacingCarRule.MAX_TOTAL_TURN
+        @DisplayName("시도 횟수가 " + RacingCarRule.MIN_TOTAL_ROUND + "보다 작거나 " + RacingCarRule.MAX_TOTAL_ROUND
                 + "보다 크다면 예외를 발생시킨다.")
-        @ValueSource(ints = {RacingCarRule.MIN_TOTAL_TURN - 1, RacingCarRule.MAX_TOTAL_TURN + 1})
+        @ValueSource(ints = {RacingCarRule.MIN_TOTAL_ROUND - 1, RacingCarRule.MAX_TOTAL_ROUND + 1})
         @ParameterizedTest
         void fail_InvalidRange(int totalTurn) {
             //given
             //when then
-            assertThatThrownBy(() -> RacingTurn.from(totalTurn))
+            assertThatThrownBy(() -> Round.from(totalTurn))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

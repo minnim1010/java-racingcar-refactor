@@ -32,7 +32,7 @@ class RacingGameManagerTest extends RacerMovingNumber {
         void singleWinner() {
             //given
             mockScreen.setRacingCarNames("car1,car2,car3");
-            mockScreen.setTotalTurn("5");
+            mockScreen.setTotalRound("5");
             mockRandom.setRandomNumber(
                     MOVING_FORWARD, STOP, MOVING_FORWARD,
                     MOVING_FORWARD, STOP, MOVING_FORWARD,
@@ -55,7 +55,7 @@ class RacingGameManagerTest extends RacerMovingNumber {
         void pluralWinners() {
             //given
             mockScreen.setRacingCarNames("car1,car2,car3,car4,car5,car6");
-            mockScreen.setTotalTurn("5");
+            mockScreen.setTotalRound("5");
             mockRandom.setRandomNumber(
                     MOVING_FORWARD, STOP, MOVING_FORWARD, MOVING_FORWARD, STOP, MOVING_FORWARD,
                     MOVING_FORWARD, STOP, MOVING_FORWARD, MOVING_FORWARD, STOP, MOVING_FORWARD,
@@ -83,9 +83,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         @ParameterizedTest
         void fail_EmptyInput(String racingCarName) {
             //given
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -98,9 +98,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
             char[] ch = new char[RacingCarRule.MAX_RACER_NAME_INPUT_LENGTH + 1];
             Arrays.fill(ch, 'a');
             String racingCarName = String.valueOf(ch);
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -111,9 +111,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         @ParameterizedTest
         void fail_InvalidInputFormat(String racingCarName) {
             //given
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -124,9 +124,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         @ParameterizedTest
         void fail_DuplicatedName(String racingCarName) {
             //given
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -141,9 +141,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
                 racingCarList.add(String.valueOf(i));
             }
             String racingCarName = String.join(",", racingCarList);
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -158,9 +158,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
                 racingCarList.add(String.valueOf(i));
             }
             String racingCarName = String.join(",", racingCarList);
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -171,9 +171,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         void fail_OverRacingCarNameMaxLength() {
             //given
             String racingCarName = "a".repeat(RacingCarRule.MAX_RACER_NAME_LENGTH + 1);
-            String turnsCount = "1";
+            String totalRound = "1";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -187,11 +187,11 @@ class RacingGameManagerTest extends RacerMovingNumber {
         @DisplayName("비었거나, 공백이라면 예외를 발생시킨다.")
         @ValueSource(strings = {" ", "\n", "\r", "\t"})
         @ParameterizedTest
-        void fail_EmptyInput(String turnsCount) {
+        void fail_EmptyInput(String totalRound) {
             //given
             String racingCarName = "1,3";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -202,9 +202,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         void fail_OverMaxInputLength() {
             //given
             String racingCarName = "1,3";
-            String turnsCount = RacingCarRule.MAX_TOTAL_TURN + "0";
+            String totalRound = RacingCarRule.MAX_TOTAL_ROUND + "0";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -213,11 +213,11 @@ class RacingGameManagerTest extends RacerMovingNumber {
         @DisplayName("숫자 이외 문자가 있다면 예외를 발생시킨다.")
         @ValueSource(strings = {"1 00", "39g9", "10(0"})
         @ParameterizedTest
-        void fail_InvalidInputFormat(String turnsCount) {
+        void fail_InvalidInputFormat(String totalRound) {
             //given
             String racingCarName = "1,3";
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             // when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);
@@ -228,9 +228,9 @@ class RacingGameManagerTest extends RacerMovingNumber {
         void fail_GreaterThanMaxTotalTurn() {
             //given
             String racingCarName = "1,3";
-            String turnsCount = String.valueOf(RacingCarRule.MAX_TOTAL_TURN + 1);
+            String totalRound = String.valueOf(RacingCarRule.MAX_TOTAL_ROUND + 1);
             mockScreen.setRacingCarNames(racingCarName);
-            mockScreen.setTotalTurn(turnsCount);
+            mockScreen.setTotalRound(totalRound);
             //when then
             assertThatThrownBy(racingGameManager::run)
                     .isInstanceOf(IllegalArgumentException.class);

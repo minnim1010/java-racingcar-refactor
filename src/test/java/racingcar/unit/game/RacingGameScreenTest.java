@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.game.RacingGameScreen;
 import racingcar.game.vo.RacerPosition;
 import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalTurnInput;
+import racingcar.game.vo.TotalRoundInput;
 import racingcar.mock.MockReader;
 import racingcar.mock.MockWriter;
 
@@ -43,11 +43,11 @@ class RacingGameScreenTest {
         String input = "10";
         mockReader.setInput(input);
         //when
-        TotalTurnInput totalTurnInput = racingGameScreen.inputTotalTurn();
+        TotalRoundInput totalRoundInput = racingGameScreen.inputTotalRound();
         //then
         String output = mockWriter.getOutput();
         assertThat(output).isEqualTo("시도할 횟수는 몇 회인가요?\n");
-        assertThat(totalTurnInput.input()).isEqualTo(input);
+        assertThat(totalRoundInput.input()).isEqualTo(input);
     }
 
     @DisplayName("실행 결과 출력을 시작하는 화면을 올바르게 구성하였는지 확인한다.")
@@ -84,7 +84,7 @@ class RacingGameScreenTest {
         result.add(new RacerPosition("name2", 2));
 
         //when
-        racingGameScreen.showTurnResult(result);
+        racingGameScreen.showRoundResult(result);
         //then
         String output = mockWriter.getOutput();
         assertThat(output).isEqualTo("""

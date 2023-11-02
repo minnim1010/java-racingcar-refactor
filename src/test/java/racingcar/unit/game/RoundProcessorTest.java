@@ -10,11 +10,11 @@ import org.junit.jupiter.api.Test;
 import racingcar.config.RacerMovingNumber;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.racer.RacingCar;
-import racingcar.game.RacingTurnProcessor;
+import racingcar.game.RacingRoundProcessor;
 import racingcar.game.vo.RacerPosition;
 import racingcar.mock.MockRandom;
 
-class RacingTurnProcessorTest extends RacerMovingNumber {
+class RoundProcessorTest extends RacerMovingNumber {
 
     private static RacerRegistry<RacingCar> getRacingCarRegistry(String... names) {
         List<RacingCar> racingCarList = new ArrayList<>();
@@ -31,7 +31,7 @@ class RacingTurnProcessorTest extends RacerMovingNumber {
     void progressTurn() {
         //given
         MockRandom mockRandom = new MockRandom();
-        RacingTurnProcessor<RacingCar> racingTurnProcessor = new RacingTurnProcessor<>(mockRandom,
+        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
                 getRacingCarRegistry("a", "b", "c"));
         mockRandom.setRandomNumber(
                 MOVING_FORWARD, STOP, MOVING_FORWARD,
@@ -41,9 +41,9 @@ class RacingTurnProcessorTest extends RacerMovingNumber {
                 MOVING_FORWARD, STOP, STOP
         );
         //when
-        racingTurnProcessor.progressTurn();
+        racingRoundProcessor.progressRound();
         //then
-        String position = racingTurnProcessor.toString().replaceAll("[^0-9]", "");
+        String position = racingRoundProcessor.toString().replaceAll("[^0-9]", "");
         assertThat(position).isEqualTo("101");
     }
 
@@ -52,10 +52,10 @@ class RacingTurnProcessorTest extends RacerMovingNumber {
     void getTurnResult() {
         //given
         MockRandom mockRandom = new MockRandom();
-        RacingTurnProcessor<RacingCar> racingTurnProcessor = new RacingTurnProcessor<>(mockRandom,
+        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
                 getRacingCarRegistry("a", "b", "c"));
         //when
-        List<RacerPosition> turnResult = racingTurnProcessor.getRacerPositions();
+        List<RacerPosition> turnResult = racingRoundProcessor.getRacerPositions();
         //then
         assertThat(turnResult).hasSize(3)
                 .extracting("name", "position")
@@ -71,12 +71,12 @@ class RacingTurnProcessorTest extends RacerMovingNumber {
     void getWinners() {
         //given
         MockRandom mockRandom = new MockRandom();
-        RacingTurnProcessor<RacingCar> racingTurnProcessor = new RacingTurnProcessor<>(mockRandom,
+        RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
                 getRacingCarRegistry("a", "b", "c"));
         mockRandom.setRandomNumber(MOVING_FORWARD, STOP, MOVING_FORWARD);
         //when
-        racingTurnProcessor.progressTurn();
-        List<String> winners = racingTurnProcessor.getWinners();
+        racingRoundProcessor.progressRound();
+        List<String> winners = racingRoundProcessor.getWinners();
         //then
         assertThat(winners).hasSize(2)
                 .containsExactly("a", "c");

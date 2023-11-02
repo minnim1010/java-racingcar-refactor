@@ -2,17 +2,17 @@ package racingcar.domain;
 
 import racingcar.validator.RacerValidator;
 
-public class RacingTurn {
+public class Round {
     private final int count;
 
-    protected RacingTurn(int count) {
+    protected Round(int count) {
         RacerValidator.validateIsWithinRacingTurnRange(count);
 
         this.count = count;
     }
 
-    public static RacingTurn from(int totalTurn) {
-        return new RacingTurn(totalTurn);
+    public static Round from(int totalTurn) {
+        return new Round(totalTurn);
     }
 
     public int getCount() {
