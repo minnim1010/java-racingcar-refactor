@@ -12,19 +12,19 @@ public final class Validator {
 
     public static void validateHasText(String input) {
         if (input == null || input.isBlank()) {
-            throw ErrorMessage.BLANK_INPUT.getException();
+            throw new IllegalArgumentException(ErrorMessage.BLANK_INPUT.getMessage());
         }
     }
 
     public static void validateLength(String input, int maxLength) {
         if (input == null || input.length() > maxLength) {
-            throw ErrorMessage.INVALID_LENGTH_INPUT.getException();
+            throw new IllegalArgumentException(ErrorMessage.INVALID_LENGTH_INPUT.getMessage());
         }
     }
 
     public static void validateNumeric(String input) {
         if (!NUMERIC_PATTERN.matcher(input).matches()) {
-            throw ErrorMessage.INVALID_NUMERIC_INPUT.getException(input);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_NUMERIC_INPUT.getMessage());
         }
     }
 }

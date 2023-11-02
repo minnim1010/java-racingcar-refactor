@@ -18,33 +18,34 @@ public final class RacerValidator {
     public static void validateRacerNameLength(String name) {
         int length = name.length();
         if (length > RacingCarRule.MAX_RACER_NAME_LENGTH) {
-            throw ErrorMessage.INVALID_RACER_NAME_LENGTH.getException(String.valueOf(length));
+            throw new IllegalArgumentException(
+                    ErrorMessage.INVALID_RACER_NAME_LENGTH.getMessage(length));
         }
     }
 
     public static void validateRacerNameFormat(String name) {
         if (!RACER_NAME_PATTERN.matcher(name).matches()) {
-            throw ErrorMessage.INVALID_RACER_NAME_FORMAT.getException(name);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RACER_NAME_FORMAT.getMessage(name));
         }
     }
 
     public static <T extends Racer> void validateRacerSize(List<T> racers) {
         int size = racers.size();
         if (size > RacingCarRule.MAX_RACER_SIZE || size < RacingCarRule.MIN_RACER_SIZE) {
-            throw ErrorMessage.INVALID_RACER_SIZE.getException(String.valueOf(size));
+            throw new IllegalArgumentException(ErrorMessage.INVALID_RACER_SIZE.getMessage(size));
         }
     }
 
     public static <T extends Racer> void validateDuplicatedRacerName(List<T> racers) {
         Set<T> set = new HashSet<>(racers);
         if (set.size() != racers.size()) {
-            throw ErrorMessage.DUPLICATED_RACER_NAME.getException();
+            throw new IllegalArgumentException(ErrorMessage.DUPLICATED_RACER_NAME.getMessage());
         }
     }
 
     public static void validateIsWithinRacingTurnRange(int totalTurn) {
         if (totalTurn < RacingCarRule.MIN_TOTAL_ROUND || totalTurn > RacingCarRule.MAX_TOTAL_ROUND) {
-            throw ErrorMessage.INVALID_TOTAL_ROUND.getException(String.valueOf(totalTurn));
+            throw new IllegalArgumentException(ErrorMessage.INVALID_TOTAL_ROUND.getMessage(totalTurn));
         }
     }
 }
