@@ -4,6 +4,7 @@ public class RacingCarRule {
     public static final int MAX_RACER_NAME_LENGTH = 5;
     public static final int MIN_RACER_SIZE = 2;
     public static final int MAX_RACER_SIZE = 100;
+    public static final int MIN_TOTAL_TURN = 1;
     public static final int MAX_TOTAL_TURN = 9999;
     public static final int RANDOM_NUMBER_MIN = 0;
     public static final int RANDOM_NUMBER_MAX = 9;

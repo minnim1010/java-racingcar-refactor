@@ -6,6 +6,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.common.config.RacingCarRule;
 import racingcar.domain.RacingTurn;
 
@@ -28,12 +30,12 @@ class RacingTurnTest {
             assertThat(racingTurn.getCount()).isEqualTo(totalTurn);
         }
 
-        @DisplayName("시도 횟수 최대 크기보다 크다면 예외를 발생시킨다.")
-        @Test
-        void fail_GreaterThanMaxTotalTurn() {
+        @DisplayName("시도 횟수가 " + RacingCarRule.MIN_TOTAL_TURN + "보다 작거나 " + RacingCarRule.MAX_TOTAL_TURN
+                + "보다 크다면 예외를 발생시킨다.")
+        @ValueSource(ints = {RacingCarRule.MIN_TOTAL_TURN - 1, RacingCarRule.MAX_TOTAL_TURN + 1})
+        @ParameterizedTest
+        void fail_InvalidRange(int totalTurn) {
             //given
-            int totalTurn = RacingCarRule.MAX_TOTAL_TURN + 1;
-
             //when then
             assertThatThrownBy(() -> RacingTurn.from(totalTurn))
                     .isInstanceOf(IllegalArgumentException.class);

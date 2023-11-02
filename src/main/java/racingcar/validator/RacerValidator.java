@@ -43,7 +43,7 @@ public final class RacerValidator {
     }
 
     public static void validateIsWithinRacingTurnRange(int totalTurn) {
-        if (totalTurn < 0 || totalTurn > RacingCarRule.MAX_TOTAL_TURN) {
+        if (totalTurn < RacingCarRule.MIN_RACER_SIZE || totalTurn > RacingCarRule.MAX_TOTAL_TURN) {
             throw ErrorMessage.INVALID_TOTAL_TURN_SIZE.getException(String.valueOf(totalTurn));
         }
     }
