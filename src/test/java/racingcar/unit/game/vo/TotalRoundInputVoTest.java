@@ -10,9 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.common.config.RacingCarRule;
-import racingcar.game.vo.TotalRoundInput;
+import racingcar.game.vo.TotalRoundInputVo;
 
-class TotalRoundInputTest {
+class TotalRoundInputVoTest {
 
     @Nested
     @DisplayName("입력된 시도 횟수에 대한 유효성 검사 시")
@@ -24,9 +24,9 @@ class TotalRoundInputTest {
             //given
             String input = String.valueOf(RacingCarRule.MAX_TOTAL_ROUND);
             //when
-            TotalRoundInput totalRoundInput = new TotalRoundInput(input);
+            TotalRoundInputVo totalRoundInputVo = new TotalRoundInputVo(input);
             //then
-            assertThat(totalRoundInput.input()).isEqualTo(input);
+            assertThat(totalRoundInputVo.input()).isEqualTo(input);
         }
 
         @DisplayName("시도 횟수 입력의 최대 길이를 넘은 경우 예외를 발생시킨다.")
@@ -35,7 +35,7 @@ class TotalRoundInputTest {
             //given
             String input = RacingCarRule.MAX_TOTAL_ROUND + "0";
             //when then
-            assertThatThrownBy(() -> new TotalRoundInput(input))
+            assertThatThrownBy(() -> new TotalRoundInputVo(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -45,7 +45,7 @@ class TotalRoundInputTest {
         void fail_BlankInput(String input) {
             //given
             //when then
-            assertThatThrownBy(() -> new TotalRoundInput(input))
+            assertThatThrownBy(() -> new TotalRoundInputVo(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -55,7 +55,7 @@ class TotalRoundInputTest {
         void fail_InvalidFormat(String input) {
             //given
             //when then
-            assertThatThrownBy(() -> new TotalRoundInput(input))
+            assertThatThrownBy(() -> new TotalRoundInputVo(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

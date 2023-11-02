@@ -4,8 +4,8 @@ import java.util.List;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.Round;
 import racingcar.domain.racer.Racer;
-import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalRoundInput;
+import racingcar.game.vo.RacingCarNamesInputVo;
+import racingcar.game.vo.TotalRoundInputVo;
 import racingcar.util.Random;
 
 public class RacingGameManager {
@@ -33,13 +33,13 @@ public class RacingGameManager {
     }
 
     private void registerRacingCar() {
-        RacingCarNamesInput racingCarNamesInput = racingGameScreen.inputRacingCarNames();
-        racerRegistry.addAll(racingCarNamesInput.toRacingCarList());
+        RacingCarNamesInputVo racingCarNamesInputVo = racingGameScreen.inputRacingCarNames();
+        racerRegistry.addAll(racingCarNamesInputVo.toRacingCarList());
     }
 
     private Round getTotalTurn() {
-        TotalRoundInput totalRoundInput = racingGameScreen.inputTotalRound();
-        return totalRoundInput.toRacingTurn();
+        TotalRoundInputVo totalRoundInputVo = racingGameScreen.inputTotalRound();
+        return totalRoundInputVo.toRacingTurn();
     }
 
     private List<String> race(Round totalRound) {

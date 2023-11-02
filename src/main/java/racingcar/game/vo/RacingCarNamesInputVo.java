@@ -6,9 +6,9 @@ import racingcar.common.config.RacingCarRule;
 import racingcar.domain.racer.RacingCar;
 import racingcar.validator.Validator;
 
-public record RacingCarNamesInput(String input) {
+public record RacingCarNamesInputVo(String input) {
 
-    public RacingCarNamesInput {
+    public RacingCarNamesInputVo {
         Validator.validateLength(input, RacingCarRule.MAX_RACER_NAME_INPUT_LENGTH);
         Validator.validateHasText(input);
     }

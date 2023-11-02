@@ -11,7 +11,7 @@ import racingcar.config.RacerMovingNumber;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.racer.RacingCar;
 import racingcar.game.RacingRoundProcessor;
-import racingcar.game.vo.RacerPosition;
+import racingcar.game.vo.RacerPositionVo;
 import racingcar.mock.MockRandom;
 
 class RoundProcessorTest extends RacerMovingNumber {
@@ -55,7 +55,7 @@ class RoundProcessorTest extends RacerMovingNumber {
         RacingRoundProcessor<RacingCar> racingRoundProcessor = new RacingRoundProcessor<>(mockRandom,
                 getRacingCarRegistry("a", "b", "c"));
         //when
-        List<RacerPosition> turnResult = racingRoundProcessor.getRacerPositions();
+        List<RacerPositionVo> turnResult = racingRoundProcessor.getRacerPositions();
         //then
         assertThat(turnResult).hasSize(3)
                 .extracting("name", "position")

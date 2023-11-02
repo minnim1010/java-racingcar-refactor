@@ -7,7 +7,7 @@ import java.util.Optional;
 import racingcar.common.config.RacingCarRule;
 import racingcar.domain.RacerRegistry;
 import racingcar.domain.racer.Racer;
-import racingcar.game.vo.RacerPosition;
+import racingcar.game.vo.RacerPositionVo;
 import racingcar.util.Random;
 
 public class RacingRoundProcessor<T extends Racer> {
@@ -25,9 +25,9 @@ public class RacingRoundProcessor<T extends Racer> {
         }
     }
 
-    public List<RacerPosition> getRacerPositions() {
+    public List<RacerPositionVo> getRacerPositions() {
         return racers.stream()
-                .map(racingCar -> new RacerPosition(racingCar.getName(), racingCar.getPosition()))
+                .map(racingCar -> new RacerPositionVo(racingCar.getName(), racingCar.getPosition()))
                 .toList();
     }
 

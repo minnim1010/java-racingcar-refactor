@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import racingcar.common.config.RacingCarRule;
-import racingcar.game.vo.RacingCarNamesInput;
+import racingcar.game.vo.RacingCarNamesInputVo;
 
-class RacingCarNamesInputTest {
+class RacingCarNamesInputVoTest {
 
     @Nested
     @DisplayName("경주 자동차 이름 입력에 대한 유효성 검사 시")
@@ -24,9 +24,9 @@ class RacingCarNamesInputTest {
             String name = "a".repeat(RacingCarRule.MAX_RACER_NAME_LENGTH);
             String input = name + name.repeat(RacingCarRule.MAX_RACER_SIZE - 1);
             //when
-            RacingCarNamesInput racingCarNamesInput = new RacingCarNamesInput(input);
+            RacingCarNamesInputVo racingCarNamesInputVo = new RacingCarNamesInputVo(input);
             //then
-            assertThat(racingCarNamesInput.input()).isEqualTo(input);
+            assertThat(racingCarNamesInputVo.input()).isEqualTo(input);
         }
 
         @DisplayName("시도 횟수 입력의 최대 길이를 넘은 경우 예외를 발생시킨다.")
@@ -35,7 +35,7 @@ class RacingCarNamesInputTest {
             //given
             String input = "a".repeat(RacingCarRule.MAX_RACER_NAME_INPUT_LENGTH + 1);
             //when then
-            assertThatThrownBy(() -> new RacingCarNamesInput(input))
+            assertThatThrownBy(() -> new RacingCarNamesInputVo(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
 
@@ -45,7 +45,7 @@ class RacingCarNamesInputTest {
         void fail_BlankInput(String input) {
             //given
             //when then
-            assertThatThrownBy(() -> new RacingCarNamesInput(input))
+            assertThatThrownBy(() -> new RacingCarNamesInputVo(input))
                     .isInstanceOf(IllegalArgumentException.class);
         }
     }

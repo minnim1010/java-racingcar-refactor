@@ -2,9 +2,9 @@ package racingcar.mock;
 
 import java.util.List;
 import racingcar.game.RacingGameScreen;
-import racingcar.game.vo.RacerPosition;
-import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalRoundInput;
+import racingcar.game.vo.RacerPositionVo;
+import racingcar.game.vo.RacingCarNamesInputVo;
+import racingcar.game.vo.TotalRoundInputVo;
 import racingcar.io.reader.Reader;
 import racingcar.io.writer.Writer;
 
@@ -18,13 +18,13 @@ public class MockRacingGameScreen extends RacingGameScreen {
     }
 
     @Override
-    public RacingCarNamesInput inputRacingCarNames() {
-        return new RacingCarNamesInput(racingCarNames);
+    public RacingCarNamesInputVo inputRacingCarNames() {
+        return new RacingCarNamesInputVo(racingCarNames);
     }
 
     @Override
-    public TotalRoundInput inputTotalRound() {
-        return new TotalRoundInput(totalRound);
+    public TotalRoundInputVo inputTotalRound() {
+        return new TotalRoundInputVo(totalRound);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MockRacingGameScreen extends RacingGameScreen {
     }
 
     @Override
-    public void showRoundResult(List<RacerPosition> turnResult) {
+    public void showRoundResult(List<RacerPositionVo> turnResult) {
     }
 
     @Override

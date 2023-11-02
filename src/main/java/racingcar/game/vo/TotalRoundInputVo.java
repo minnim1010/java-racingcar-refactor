@@ -4,9 +4,9 @@ import racingcar.common.config.RacingCarRule;
 import racingcar.domain.Round;
 import racingcar.validator.Validator;
 
-public record TotalRoundInput(String input) {
+public record TotalRoundInputVo(String input) {
 
-    public TotalRoundInput {
+    public TotalRoundInputVo {
         Validator.validateLength(input, RacingCarRule.TOTAL_TURN_INPUT_LENGTH);
         Validator.validateHasText(input);
         Validator.validateNumeric(input);

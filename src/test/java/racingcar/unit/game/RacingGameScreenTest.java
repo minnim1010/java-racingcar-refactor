@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import racingcar.game.RacingGameScreen;
-import racingcar.game.vo.RacerPosition;
-import racingcar.game.vo.RacingCarNamesInput;
-import racingcar.game.vo.TotalRoundInput;
+import racingcar.game.vo.RacerPositionVo;
+import racingcar.game.vo.RacingCarNamesInputVo;
+import racingcar.game.vo.TotalRoundInputVo;
 import racingcar.mock.MockReader;
 import racingcar.mock.MockWriter;
 
@@ -29,11 +29,11 @@ class RacingGameScreenTest {
         String input = "name1,name2";
         mockReader.setInput(input);
         //when
-        RacingCarNamesInput racingCarNamesInput = racingGameScreen.inputRacingCarNames();
+        RacingCarNamesInputVo racingCarNamesInputVo = racingGameScreen.inputRacingCarNames();
         //then
         String output = mockWriter.getOutput();
         assertThat(output).isEqualTo("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)\n");
-        assertThat(racingCarNamesInput.input()).isEqualTo(input);
+        assertThat(racingCarNamesInputVo.input()).isEqualTo(input);
     }
 
     @DisplayName("시도 횟수 입력 화면을 올바르게 구성하였는지 확인한다.")
@@ -43,11 +43,11 @@ class RacingGameScreenTest {
         String input = "10";
         mockReader.setInput(input);
         //when
-        TotalRoundInput totalRoundInput = racingGameScreen.inputTotalRound();
+        TotalRoundInputVo totalRoundInputVo = racingGameScreen.inputTotalRound();
         //then
         String output = mockWriter.getOutput();
         assertThat(output).isEqualTo("시도할 횟수는 몇 회인가요?\n");
-        assertThat(totalRoundInput.input()).isEqualTo(input);
+        assertThat(totalRoundInputVo.input()).isEqualTo(input);
     }
 
     @DisplayName("실행 결과 출력을 시작하는 화면을 올바르게 구성하였는지 확인한다.")
@@ -79,9 +79,9 @@ class RacingGameScreenTest {
     @Test
     void test_ShowTurnResultScreen() {
         //given
-        List<RacerPosition> result = new ArrayList<>();
-        result.add(new RacerPosition("name1", 1));
-        result.add(new RacerPosition("name2", 2));
+        List<RacerPositionVo> result = new ArrayList<>();
+        result.add(new RacerPositionVo("name1", 1));
+        result.add(new RacerPositionVo("name2", 2));
 
         //when
         racingGameScreen.showRoundResult(result);
